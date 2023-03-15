@@ -5,8 +5,8 @@ const isEven = () => {
   const rules = 'Answer "yes" if the number is even, otherwise answer "no".';
   const game = () => {
     const number = getRandomNumber(100);
-    let rightAnswer;
     const question = `${'Question:'} ${number}`;
+    let rightAnswer;
     if (number % 2 === 0) {
       rightAnswer = 'yes';
     } else {

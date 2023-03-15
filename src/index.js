@@ -7,6 +7,7 @@ const gameEngine = (rules, game) => {
   console.log(`${'Hello'}, ${userName}!`);
 
   console.log(rules);
+
   let result = 0;
   for (let i = 1; i <= 3; i += 1) {
     const [question, rightAnswer] = game();
