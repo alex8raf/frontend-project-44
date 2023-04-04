@@ -1,30 +1,66 @@
-import runGameEngine from '../index.js';
-import getRandomNumber from '../utility.js';
+import runGameEngine from '../engine.js';
+import generateRandomNumber from '../utility.js';
 
-const rules = 'What number is missing in the progression?';
+const gamesRule = 'What number is missing in the progression?';
 
-const getProgression = () => {
-  const lengthOfProgression = 10;
-  const minStep = 1;
-  const stepOfProgression = minStep + getRandomNumber(15);
-  const number = getRandomNumber();
+const getProgression = (number, lengthOfProgression, stepOfProgression) => {
   const array = [number];
   for (let i = 1; i < lengthOfProgression; i += 1) {
     array.push(array[i - 1] + stepOfProgression);
   }
-  const indexOfMissing = getRandomNumber(lengthOfProgression - 1);
-  const rightAnswer = array[indexOfMissing];
-  array[indexOfMissing] = '..';
-  const string = array.join(' ');
-  return [string, rightAnswer];
+  return array;
 };
 
-const runGame = () => {
-  const [string, rightAnswer] = getProgression();
-  const question = `${'Question:'} ${string}`;
+const addMissingElement = (
+  number,
+  lengthOfProgression,
+  stepOfProgression,
+  indexOfMissing,
+) => {
+  const array = getProgression(number, lengthOfProgression, stepOfProgression);
+  array[indexOfMissing] = '..';
+  const stringWithMissNum = array.join(' ');
+  return stringWithMissNum;
+};
+
+const getRightAnswer = (
+  number,
+  lengthOfProgression,
+  stepOfProgression,
+  indexOfMissing,
+) => {
+  const array = getProgression(number, lengthOfProgression, stepOfProgression);
+  const answer = array[indexOfMissing];
+  return answer;
+};
+
+const generateRound = () => {
+  const number = generateRandomNumber();
+  const lengthOfProgression = 10;
+  const stepOfProgression = generateRandomNumber(1, 20);
+  const indexOfMissing = generateRandomNumber(0, lengthOfProgression - 1);
+
+  const progression = addMissingElement(
+    number,
+    lengthOfProgression,
+    stepOfProgression,
+    indexOfMissing,
+  );
+
+  const question = `${'Question:'} ${progression}`;
+
+  const rightAnswer = getRightAnswer(
+    number,
+    lengthOfProgression,
+    stepOfProgression,
+    indexOfMissing,
+  );
+
   return [question, String(rightAnswer)];
 };
 
-runGameEngine(rules, runGame);
+const runGame = () => {
+  runGameEngine(gamesRule, generateRound);
+};
 
 export default runGame;

@@ -1,39 +1,40 @@
-import runGameEngine from '../index.js';
-import getRandomNumber from '../utility.js';
+import runGameEngine from '../engine.js';
+import generateRandomNumber from '../utility.js';
 
-const rules = 'What is the result of the expression?';
+const gamesRule = 'What is the result of the expression?';
 
-const getOperation = () => {
-  const index = getRandomNumber(3);
-  switch (index) {
-    case 0:
-      return '+';
-    case 1:
-      return '-';
+const generateOperation = () => {
+  const index = generateRandomNumber(0, 3);
+  const operations = ['+', '-', '*'];
+  return operations[index];
+};
+
+const calculateExpression = (number1, operation, number2) => {
+  switch (operation) {
+    case '+':
+      return number1 + number2;
+    case '-':
+      return number1 - number2;
     default:
-      return '*';
+      return number1 * number2;
   }
 };
 
-const runGame = () => {
-  const number1 = getRandomNumber(50);
-  const number2 = getRandomNumber(50);
-  const expression = `${number1} ${getOperation()} ${number2}`;
+const generateRound = () => {
+  const number1 = generateRandomNumber(0, 50);
+  const number2 = generateRandomNumber(0, 50);
+
+  const operation = generateOperation();
+  const expression = `${number1} ${operation} ${number2}`;
+
   const question = `${'Question:'} ${expression}`;
-  const getRightAnswer = () => {
-    switch (expression) {
-      case `${number1} + ${number2}`:
-        return [number1 + number2];
-      case `${number1} - ${number2}`:
-        return [number1 - number2];
-      default:
-        return [number1 * number2];
-    }
-  };
-  const rightAnswer = getRightAnswer();
+  const rightAnswer = calculateExpression(number1, operation, number2);
+
   return [question, String(rightAnswer)];
 };
 
-runGameEngine(rules, runGame);
+const runGame = () => {
+  runGameEngine(gamesRule, generateRound);
+};
 
 export default runGame;
