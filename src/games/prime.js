@@ -12,10 +12,10 @@ const isPrime = (number) => {
   return true;
 };
 
-const isPrimeOrNot = (number) => (isPrime(number) ? 'yes' : 'no');
-
 const generateRound = () => {
   const number = generateRandomNumber(2, 100);
+
+  const isPrimeOrNot = () => (isPrime(number) ? 'yes' : 'no');
 
   const rightAnswer = isPrimeOrNot(number);
   const question = `${'Question:'} ${number}`;
@@ -23,8 +23,4 @@ const generateRound = () => {
   return [question, rightAnswer];
 };
 
-const runGame = () => {
-  runGameEngine(gamesRule, generateRound);
-};
-
-export default runGame;
+export default () => runGameEngine(gamesRule, generateRound);

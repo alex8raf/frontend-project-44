@@ -11,56 +11,21 @@ const getProgression = (number, lengthOfProgression, stepOfProgression) => {
   return array;
 };
 
-const addMissingElement = (
-  number,
-  lengthOfProgression,
-  stepOfProgression,
-  indexOfMissing,
-) => {
-  const array = getProgression(number, lengthOfProgression, stepOfProgression);
-  array[indexOfMissing] = '..';
-  const stringWithMissNum = array.join(' ');
-  return stringWithMissNum;
-};
-
-const getRightAnswer = (
-  number,
-  lengthOfProgression,
-  stepOfProgression,
-  indexOfMissing,
-) => {
-  const array = getProgression(number, lengthOfProgression, stepOfProgression);
-  const answer = array[indexOfMissing];
-  return answer;
-};
-
 const generateRound = () => {
   const number = generateRandomNumber();
   const lengthOfProgression = 10;
   const stepOfProgression = generateRandomNumber(1, 20);
   const indexOfMissing = generateRandomNumber(0, lengthOfProgression - 1);
 
-  const progression = addMissingElement(
-    number,
-    lengthOfProgression,
-    stepOfProgression,
-    indexOfMissing,
-  );
+  const array = getProgression(number, lengthOfProgression, stepOfProgression);
+  const rightAnswer = array[indexOfMissing];
 
-  const question = `${'Question:'} ${progression}`;
+  array[indexOfMissing] = '..';
+  const stringWithMissNum = array.join(' ');
 
-  const rightAnswer = getRightAnswer(
-    number,
-    lengthOfProgression,
-    stepOfProgression,
-    indexOfMissing,
-  );
+  const question = `${'Question:'} ${stringWithMissNum}`;
 
   return [question, String(rightAnswer)];
 };
 
-const runGame = () => {
-  runGameEngine(gamesRule, generateRound);
-};
-
-export default runGame;
+export default () => runGameEngine(gamesRule, generateRound);

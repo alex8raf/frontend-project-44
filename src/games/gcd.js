@@ -14,8 +14,8 @@ const getGCD = (number1, number2) => {
 };
 
 const generateRound = () => {
-  const number1 = generateRandomNumber(1, 100);
-  const number2 = generateRandomNumber(1, 100);
+  const number1 = generateRandomNumber(1);
+  const number2 = generateRandomNumber(1);
 
   const rightAnswer = getGCD(number1, number2);
   const question = `${'Question:'} ${number1} ${number2}`;
@@ -23,8 +23,4 @@ const generateRound = () => {
   return [question, String(rightAnswer)];
 };
 
-const runGame = () => {
-  runGameEngine(gamesRule, generateRound);
-};
-
-export default runGame;
+export default () => runGameEngine(gamesRule, generateRound);

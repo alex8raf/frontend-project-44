@@ -3,26 +3,29 @@ import generateRandomNumber from '../utility.js';
 
 const gamesRule = 'What is the result of the expression?';
 
-const generateOperation = () => {
-  const index = generateRandomNumber(0, 3);
-  const operations = ['+', '-', '*'];
-  return operations[index];
-};
-
 const calculateExpression = (number1, operation, number2) => {
   switch (operation) {
     case '+':
       return number1 + number2;
     case '-':
       return number1 - number2;
-    default:
+    case '*':
       return number1 * number2;
+    default:
+      return 'unexpected operator';
   }
 };
 
 const generateRound = () => {
   const number1 = generateRandomNumber(0, 50);
   const number2 = generateRandomNumber(0, 50);
+
+  const generateOperation = () => {
+    const maxIndex = 3;
+    const index = generateRandomNumber(0, maxIndex);
+    const operations = ['+', '-', '*'];
+    return operations[index];
+  };
 
   const operation = generateOperation();
   const expression = `${number1} ${operation} ${number2}`;
@@ -33,8 +36,4 @@ const generateRound = () => {
   return [question, String(rightAnswer)];
 };
 
-const runGame = () => {
-  runGameEngine(gamesRule, generateRound);
-};
-
-export default runGame;
+export default () => runGameEngine(gamesRule, generateRound);
